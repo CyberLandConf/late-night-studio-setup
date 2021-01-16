@@ -1,0 +1,33 @@
+- hosts: "late-night-studio-instance"
+  vars:
+    vncserver_password: defaults
+
+  tasks:
+    - name: setup tigervnc server
+      apt:
+        name:
+          - fvwm
+          - xterm
+          - xfce4
+          - xfce4-goodies
+          - gnome-session
+          - tigervnc-standalone-server
+          - tigervnc-common
+        update_cache: true
+
+    - name: create vnc home directory
+      file:
+        name: ~/.vnc
+        state: directory
+
+    - name: setup tigervnc password
+      shell: echo {{ vncserver_password }} | vncpasswd -f > ~/.vnc/passwd
+
+    - name: config tigervnc
+      copy:
+        src: files/xstartup
+        dest: ~/.vnc/xstartup
+        mode: 0700
+
+    - name: start tigervnc
+      shell: vncserver -passwd /root/.vnc/passwd -xstartup /root/.vnc/xstartup
