@@ -3,7 +3,7 @@
     vncserver_password: defaults
 
   tasks:
-    - name: setup tigervnc server
+    - name: install tigervnc server
       apt:
         name:
           - fvwm
@@ -29,5 +29,28 @@
         dest: ~/.vnc/xstartup
         mode: 0700
 
-    - name: start tigervnc
-      shell: vncserver -passwd /root/.vnc/passwd -xstartup /root/.vnc/xstartup
+
+    - name: add obs studio repository
+      apt_repository:
+        repo: ppa:obsproject/obs-studio
+
+    - name: install obs studio and
+      apt:
+        name:
+          - obs-studio
+          - chromium-browser
+          - git
+          - xvfb
+
+    - name: install chrome browser
+      apt:
+        deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+    - name: clone jitsi-pop cyberland fork
+      git:
+        repo: https://github.com/CyberLandConf/jitsi-pop.git
+        dest: /root/jitsi-pop
+
+
+    # - name: start tigervnc
+    #   shell: vncserver -passwd /root/.vnc/passwd -xstartup /root/.vnc/xstartup

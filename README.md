@@ -30,9 +30,40 @@ ansible-playbook --private-key=/home/sparsick/.ssh/id_hetzner_late_night -i inve
 ```
 Ansible needs also a configured API Token via system environment `HCLOUD_TOKEN`.
 
+## Manuel steps on remote machine
+
+
+Login via SSH
+```shell
+ssh -i ~/.ssh/id_hetzner_late_night root@116.203.129.190
+```
+
+Start vncserver
+```shell
+vncserver
+```
 
 ## Setup VNC Viewer on local Machine
 
+Open SSH tunnel
 ```shell
 ssh -i ~/.ssh/id_hetzner_late_night root@116.203.129.190 -L 5901:127.0.0.1:5901 -N
+```
+
+Connect with VNCViewer to `localhost:5901`.
+
+## Further step on Remote Machine
+
+Start Google Browser
+
+```shell
+google-chrome --no-sandbox
+```
+
+Install Jitsi-Pop Extension, that is located in `root/jitsi-pop`.
+
+Configure OBS
+
+```shell
+obs
 ```
